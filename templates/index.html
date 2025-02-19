@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Time Timer (classic)</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    #timerCanvas {
+      border: 1px solid #ccc;
+      margin-top: 20px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 600px;
+      height: 600px;
+    }
+    label, button, input {
+      font-size: 1.5em;
+      margin: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Timer</h1>
+
+  <!-- Input for minutes -->
+  <label for="minutes">Set minutes (0-60): </label>
+  <input type="number" id="minutes" min="0" max="60" value="15">
+
+  <!-- Buttons -->
+  <button onclick="startTimer()">Start</button>
+  <button onclick="stopTimer()">Stop</button>
+
+  <canvas id="timerCanvas" width="400" height="400"></canvas>
+
+  <script>
+    const timerCanvas = document.getElementById('timerCanvas');
+    const ctx = timerCanvas.getContext('2d');
+
+    let totalSeconds = 0;     // User-set seconds
+    let remainingSeconds = 0; // Remaining seconds (counting down)
+    let intervalId = null;
+
+    // Draws the complete dial and the red portion
+    function drawTimer() {
+      ctx.clearRect(0, 0, timerCanvas.width, timerCanvas.height);
+
+      const centerX = timerCanvas.width / 2;
+      const centerY = timerCanvas.height / 2;
+      const radius = 150;
+
+      // 1) Dial: full circle (60-minute division)
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+      ctx.strokeStyle = '#000000';
+      ctx.lineWidth = 5;
+      ctx.stroke();
+      ctx.closePath();
+
+      // 2) Calculate the red "Time-Timer" area
+      //    60 minutes = 3600 seconds -> fraction: how much of 60min?
+      //    Example: 15min = 900sec, fraction = 900 / 3600 = 0.25
+      let fraction = remainingSeconds / 3600;
+      if (fraction < 0) fraction = 0;  // just to be safe
+
+      // Start and end angles:
+      // - Start: -90° (12 o'clock in canvas coordinates)
+      // - End:   startAngle + fraction * 2π (clockwise)
+      const startAngle = -Math.PI / 2; 
+      const endAngle = startAngle + (2 * Math.PI * fraction);
+
+      // 3) Red sector (clockwise = false)
+      ctx.beginPath();
+      ctx.moveTo(centerX, centerY);
+      ctx.arc(centerX, centerY, radius, startAngle, endAngle, false);
+      ctx.fillStyle = '#FF0000';
+      ctx.fill();
+      ctx.closePath();
+
+      // 4) Minute markers (0..59), with 0 (or 60) at the top
+      //    => Angle = (i * 6) - 90 degrees
+      for (let i = 0; i < 60; i++) {
+        const angle = ((i * 6) - 90) * Math.PI / 180;
+        const x1 = centerX + radius * Math.cos(angle);
+        const y1 = centerY + radius * Math.sin(angle);
+        const x2 = centerX + (radius - 10) * Math.cos(angle);
+        const y2 = centerY + (radius - 10) * Math.sin(angle);
+
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.strokeStyle = '#000000';
+        ctx.lineWidth = (i % 5 === 0) ? 2 : 1; // thicker every 5 minutes
+        ctx.stroke();
+        ctx.closePath();
+      }
+
+      // 5) Labels every 5 minutes (5,10,15,...,60)
+      ctx.font = '16px sans-serif';
+      ctx.fillStyle = '#000000';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+
+      let labels = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 0];
+      labels.forEach((minLabel) => {
+        const angleDegrees = (minLabel * 6) - 90;
+        const angle = angleDegrees * Math.PI / 180;
+
+        const labelRadius = radius + 20;
+        const xText = centerX + labelRadius * Math.cos(angle);
+        const yText = centerY + labelRadius * Math.sin(angle);
+
+        // 60 minutes at the top, possibly labeled as "60" or "0":
+        ctx.fillText(minLabel, xText, yText);
+      });
+    }
+
+    // Every second: count down time, redraw
+    function updateTimer() {
+      remainingSeconds--;
+      if (remainingSeconds <= 0) {
+        remainingSeconds = 0;
+        stopTimer();
+      }
+      drawTimer();
+    }
+
+    // Start
+    function startTimer() {
+      const minsInput = document.getElementById('minutes').value;
+      totalSeconds = parseInt(minsInput, 10) * 60;
+      remainingSeconds = totalSeconds;
+
+      if (intervalId) clearInterval(intervalId);
+      intervalId = setInterval(updateTimer, 1000);
+
+      drawTimer();
+    }
+
+    // Stop
+    function stopTimer() {
+      clearInterval(intervalId);
+      intervalId = null;
+    }
+
+    // Draw once on load
+    drawTimer();
+  </script>
+</body>
+</html>
