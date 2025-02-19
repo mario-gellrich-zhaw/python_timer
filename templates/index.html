@@ -40,8 +40,8 @@
     const timerCanvas = document.getElementById('timerCanvas');
     const ctx = timerCanvas.getContext('2d');
 
-    let totalSeconds = 0;     // User-set seconds
-    let remainingSeconds = 0; // Remaining seconds (counting down)
+    let totalSeconds = 0;
+    let remainingSeconds = 0;
     let intervalId = null;
 
     // Draws the complete dial and the red portion
@@ -76,7 +76,8 @@
       ctx.beginPath();
       ctx.moveTo(centerX, centerY);
       ctx.arc(centerX, centerY, radius, startAngle, endAngle, false);
-      ctx.fillStyle = '#FF0000';
+      ctx.fillStyle = "#E52B50";
+      // ctx.fillStyle = "#93C572";
       ctx.fill();
       ctx.closePath();
 
