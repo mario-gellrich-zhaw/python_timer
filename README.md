@@ -1,4 +1,4 @@
-# Time Timer (Classic)
+# Timer (Classic)
 
 A simple visual timer web app that helps track time with a classic "Time Timer" style countdown.
 
@@ -15,16 +15,26 @@ A simple visual timer web app that helps track time with a classic "Time Timer" 
 4. Click the **Stop** button to halt the timer at any time.
 
 ## Usage
-Simply open the `index.html` file in your preferred web browser. The timer will start counting down visually once initiated.
+```bash
+# Clone the repository: 
+git clone https://github.com/mario-gellrich-zhaw/python_timer
 
-## Technologies Used
+# Open a terminal (e.g. inside VS Code), cd into the folder python_timer and run:
+python app.py
+
+# Access the timer by following the privided link, e.g.: http://127.0.0.1:5000
+```
+
+## Technologies Use
+- Python
+- Flask
 - HTML5
 - CSS
 - JavaScript
 - Canvas API for rendering the visual timer
 
 ## Installation
-No installations required, runs in a web browser.
+Install Python and the Python library flask on your computer (virtualenv recommended).
 
 ## Code Overview
 The timer is implemented using the HTML5 `<canvas>` element, with JavaScript handling:
