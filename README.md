@@ -1,6 +1,6 @@
-# Timer (Classic)
+# Timer
 
-A simple visual timer web app that helps track time with a classic "Time Timer" style countdown.
+A simple visual timer web app that helps track time.
 
 ## Features
 - Set a timer between 0 to 60 minutes.
@@ -22,7 +22,7 @@ git clone https://github.com/mario-gellrich-zhaw/python_timer
 # Open a terminal (e.g. inside VS Code), cd into the folder python_timer and run:
 python app.py
 
-# Access the timer by following the privided link, e.g.: http://127.0.0.1:5000
+# Access the timer by following the link provided, e.g.: http://127.0.0.1:5000.
 ```
 
 ## Technologies Use
