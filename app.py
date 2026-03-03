@@ -1,3 +1,5 @@
+"""Flask web application serving the visual timer."""
+
 from flask import Flask, render_template
 
 app = Flask(__name__)
@@ -5,6 +7,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
+    """Render the timer page."""
     return render_template('index.html')
 
 
