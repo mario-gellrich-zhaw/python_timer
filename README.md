@@ -3,7 +3,7 @@
 A simple visual timer web app that helps track time.
 
 ## Features
-- Set a timer between 0 to 60 minutes.
+- Set a timer between 0 and 60 minutes.
 - Visual countdown using a red sector that shrinks over time.
 - Start and stop buttons for timer control.
 - Clear, easy-to-read minute markers.
@@ -25,7 +25,7 @@ python app.py
 # Access the timer by following the link provided, e.g.: http://127.0.0.1:5000.
 ```
 
-## Technologies Use
+## Technologies Used
 - Python
 - Flask
 - HTML5
@@ -51,4 +51,4 @@ Developed by Dr. Mario Gellrich.
 
 ---
 
-Enjoy using the **Timer** for productivit or study sessions!
+Enjoy using the **Timer** for productivity or study sessions!
